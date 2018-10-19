@@ -44,5 +44,4 @@ for i in range(len(num1)):
                 yi = np.power((num2[i]-num2[j]),2)
                 d = np.sqrt(xi+(yi))
                 dAll[i][j] = d         
-
-
+####
