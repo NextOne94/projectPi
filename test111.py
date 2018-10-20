@@ -21,6 +21,25 @@ for i in range(len(newarr)) :
 print(num1) 
 print(num2)
 
+position = 0
+for i in range(len(num1)):
+        xi = np.power((num1[position]-num1[i]),2)
+        yi = np.power((num2[position]-num2[i]),2)
+        d = np.sqrt(xi+(yi))
+        dall[position][i] = d
+        minn = dall[position][position]
+        for j in range(len(num1)):
+        if minn == 0 :
+                minn =  dall[position][j]
+                position = i
+       
+        if minn > dall[i][j] and dall[i][j] > 0 :
+                minn = dall[i]
+                position = i
+
+
+
+
 for i in range(len(num1)):
         xi = np.power((num1[0]-num1[i]),2)
         yi = np.power((num2[0]-num2[i]),2)
