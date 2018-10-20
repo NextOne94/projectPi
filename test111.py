@@ -39,9 +39,9 @@ for i in range(len(num1)):
                         position = j
         
                 if minn > dall[position][j] and dall[position][j] > 0  :
-                        
-                        minn = dall[i][j]
-                        position = j
+                        if(chackpath(j)):
+                                minn = dall[i][j]
+                                position = j
         posarry[i] = position
      
 print(posarry) 
@@ -51,7 +51,17 @@ print(posarry)
 
 
 
-
+def chackpath(x):
+        path = 0
+        for i in range(len(posarry)):
+                if(x == posarry[i]):
+                       path =0
+                else:
+                        path = 1
+        if path == 1:
+                return False
+        else :
+                return True
 
 
 
