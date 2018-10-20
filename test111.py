@@ -20,60 +20,92 @@ for i in range(len(newarr)) :
 
 print(num1) 
 print(num2)
-
-position = 0
-for i in range(len(num1)):
-        xi = np.power((num1[position]-num1[i]),2)
-        yi = np.power((num2[position]-num2[i]),2)
-        d = np.sqrt(xi+(yi))
-        dall[position][i] = d
-        minn = dall[position][position]
-        for j in range(len(num1)):
-        if minn == 0 :
-                minn =  dall[position][j]
-                position = i
-       
-        if minn > dall[i][j] and dall[i][j] > 0 :
-                minn = dall[i]
-                position = i
-
-
-
-
-for i in range(len(num1)):
-        xi = np.power((num1[0]-num1[i]),2)
-        yi = np.power((num2[0]-num2[i]),2)
-        d = np.sqrt(xi+(yi))
-        dall[0][i] = d
-print(dall)
 minn = dall[0][0]
 position = 0
+posarry = {}
 for i in range(len(num1)):
-        if minn == 0 :
-                minn =  dall[0][i]
-                position = i
-       
-        if minn > dall[0][0] and dall[0][0] > 0 :
-                minn = dall[i]
-                position = i
+        for j in range(len(num1)):
+         xi = np.power((num1[i]-num1[j]),2)
+         yi = np.power((num2[i]-num2[j]),2)
+         d = np.sqrt(xi+(yi))
+         dall[i][j] = d
 
-print(dall)
-print(position)
-
+print(dall) 
 for i in range(len(num1)):
-        xi = np.power((num1[position]-num1[i]),2)
-        yi = np.power((num2[position]-num2[i]),2)
-        d = np.sqrt(xi+(yi))
-        dall[1][i] = d
+        minn = dall[position][position]
+        for j in range(len(num1)):
+                if minn == 0 :
+                        minn =  dall[position][j]
+                        position = j
+        
+                if minn > dall[position][j] and dall[position][j] > 0  :
+                        
+                        minn = dall[i][j]
+                        position = j
+        posarry[i] = position
+     
+print(posarry) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#for i in range(len(num1)):
+ #       xi = np.power((num1[0]-num1[i]),2)
+ #       yi = np.power((num2[0]-num2[i]),2)
+  #      d = np.sqrt(xi+(yi))
+ #       dall[0][i] = d
+#print(dall)
+#minn = dall[0][0]
+#position = 0
+#for i in range(len(num1)):
+#        if minn == 0 :
+#                minn =  dall[0][i]
+  #              position = i
+  #     
+   #     if minn > dall[0][0] and dall[0][0] > 0 :
+  #              minn = dall[i]
+    #            position = i
+
+#print(dall)
+#print(position)
+
+#for i in range(len(num1)):
+ #       xi = np.power((num1[position]-num1[i]),2)
+ #       yi = np.power((num2[position]-num2[i]),2)
+ #       d = np.sqrt(xi+(yi))
+ #       dall[1][i] = d
         
 
 
-print(dall)
+#print(dall)
 
-for i in range(len(num1)):
-        for j in range(len(num1)):
-                xi = np.power((num1[i]-num1[j]),2)
-                yi = np.power((num2[i]-num2[j]),2)
-                d = np.sqrt(xi+(yi))
-                dAll[i][j] = d         
+#for i in range(len(num1)):
+#        for j in range(len(num1)):
+#                xi = np.power((num1[i]-num1[j]),2)
+#                yi = np.power((num2[i]-num2[j]),2)
+ #               d = np.sqrt(xi+(yi))
+#                dAll[i][j] = d         
 ####
