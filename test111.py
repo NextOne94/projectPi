@@ -10,41 +10,48 @@ dAll = np.arange(0)
 dAll.resize(5,5)
 newarr = [ (0,0) ]
 x = len(arr1)
+posarry = [0]
 
-for i in range(x) :
-        newarr.append(arr1[i])
-print(newarr)
-for i in range(len(newarr)) :
-        num1.append(newarr[i][0]) 
-        num2.append(newarr[i][1])
 
-print(num1) 
-print(num2)
-minn = dall[0][0]
-position = 0
-posarry = {}
-for i in range(len(num1)):
-        for j in range(len(num1)):
-         xi = np.power((num1[i]-num1[j]),2)
-         yi = np.power((num2[i]-num2[j]),2)
-         d = np.sqrt(xi+(yi))
-         dall[i][j] = d
 
-print(dall) 
-for i in range(len(num1)):
-        minn = dall[position][position]
-        for j in range(len(num1)):
-                if minn == 0 :
-                        minn =  dall[position][j]
-                        position = j
+
+
+def Main():
+        for i in range(x) :
+                newarr.append(arr1[i])
+        print(newarr)
+        for i in range(len(newarr)) :
+                num1.append(newarr[i][0]) 
+                num2.append(newarr[i][1])
+
+        print(num1) 
+        print(num2)
+        minn = dall[0][0]
+        position = 0
         
-                if minn > dall[position][j] and dall[position][j] > 0  :
-                        if(chackpath(j)):
-                                minn = dall[i][j]
+        for i in range(len(num1)):
+                for j in range(len(num1)):
+                        xi = np.power((num1[i]-num1[j]),2)
+                        yi = np.power((num2[i]-num2[j]),2)
+                        d = np.sqrt(xi+(yi))
+                        dall[i][j] = d
+
+        print(dall) 
+        for i in range(len(num1)):
+                minn = dall[position][position]
+                point = position
+                for j in range(len(num1)):
+                        if minn == 0 :
+                                minn =  dall[point][j]
                                 position = j
-        posarry[i] = position
-     
-print(posarry) 
+                
+                        if minn >= dall[point][j] and dall[point][j] > 0  :
+                                if chackpath(j):
+                                        minn = dall[point][j]
+                                        position = j
+                posarry.append(position)
+        
+        print(posarry) 
 
 
 
@@ -55,10 +62,11 @@ def chackpath(x):
         path = 0
         for i in range(len(posarry)):
                 if(x == posarry[i]):
-                       path =0
+                       path = 0
+                       break
                 else:
                         path = 1
-        if path == 1:
+        if path == 0:
                 return False
         else :
                 return True
@@ -71,7 +79,9 @@ def chackpath(x):
 
 
 
-
+if __name__ == '__main__':
+		print("tsp")
+		Main()
 
 
 
