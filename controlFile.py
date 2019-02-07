@@ -29,12 +29,12 @@ dall.resize(5,5)
 dAll = np.arange(0)
 dAll.resize(5,5)
 newarr = [ (0,0) ]
-x = len(arr1)
+#x = len(arr1)
 posarry = [0]
 
 
 
-def StepMove(xxx):
+def StepMove(xxx):#step4
     locxold=0
     locyold=0
     
@@ -133,7 +133,7 @@ def StepClk(locx,locy,dir_V,dir_H):
 
 
 
-def select_DB(datas):
+def select_DB(datas):#step2
     xxx = []
     for i in range(len(datas)):
         data = datas[i]
@@ -152,19 +152,21 @@ def select_DB(datas):
     
         connection.close()
     print(xxx)
-    StepMove(xxx)
-    
-def Datarecv(data):
+    Listtsp = TSP(xxx)#step3
+
+    StepMove(Listtsp)#step4
+
+def Datarecv(data): #Step1
     datas = data.split('-')
     datas.pop(0)
     datas.pop(len(datas)-1)
     print(datas)
     print(len(datas))
-    select_DB(datas)
+    select_DB(datas)#step2
 
-def TSP():
-        for i in range(x) :
-                newarr.append(arr1[i])
+def TSP(listSelect):#step3
+        for i in range(listSelect) :
+                newarr.append(listSelect[i])
         print(newarr)
         for i in range(len(newarr)) :
                 num1.append(newarr[i][0]) 
@@ -198,6 +200,8 @@ def TSP():
                 posarry.append(position)
         
         print(posarry) 
+        return posarry
+
 
 
 
