@@ -2,7 +2,7 @@
 import socket
 
 def Main():
-        host = '127.0.0.1' #กำหนดค่า host ที่เชื่อมต่อ
+        host = '192.168.43.154' #กำหนดค่า host ที่เชื่อมต่อ
         port = 5000 #กำหนดค่าพอร์ตในการสื่อสาร
 
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #สร้าง object ในการเชื่อมต่อ socket
