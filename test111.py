@@ -16,7 +16,7 @@ posarry = [0]
 
 
 
-def Main():
+def TSP():
         for i in range(x) :
                 newarr.append(arr1[i])
         print(newarr)
