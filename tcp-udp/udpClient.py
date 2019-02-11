@@ -2,13 +2,13 @@
 import	socket
 
 def Main():
-		host = '127.0.0.1'  #กำหนดค่า host ที่เชื่อมต่อ
-		port = 5001 #กำหนดค่าพอร์ตในการสื่อสาร
+		host = '192.168.43.154'  #กำหนดค่า host ที่เชื่อมต่อ
+		port = 5000 #กำหนดค่าพอร์ตในการสื่อสาร
 
-		server = ('127.0.0.1', 5000) #รวม host กับค่าพอร์ตเข้าเป็น tuple เดียวกัน
+		server = (host, port) #รวม host กับค่าพอร์ตเข้าเป็น tuple เดียวกัน
 
 		s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) #สร้าง object ในการเชื่อมต่อ socket
-		s.bind((host,port)) #เชื่อมต่อ
+		s.connect(server) #เชื่อมต่อ
 
 		massage = input("->")
 		while massage != 'q':
