@@ -203,7 +203,7 @@ def TSP(listSelect):#step3
         return posarry
 
 
-
+#####test on pi ######
 
 def chackpath(x):
         path = 0
