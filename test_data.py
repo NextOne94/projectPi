@@ -88,7 +88,7 @@ def show_data():
     print(data)
 
 
-            
+
 if __name__ == '__main__':
 		#print("Server Start")
         Main()

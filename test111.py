@@ -81,7 +81,7 @@ def chackpath(x):
 
 if __name__ == '__main__':
 		print("tsp")
-		Main()
+		TSP()
 
 
 
