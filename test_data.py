@@ -2,13 +2,15 @@ import random
 import xlsxwriter
 import xlrd 
 import numpy as np
+from controlFile_test import *
 
 
 
 
 # Create a workbook and add a worksheet.
 workbook = xlsxwriter.Workbook('Expenses01.xlsx')
-worksheet = workbook.add_worksheet()
+worksheet = workbook.add_worksheet("RandomData")
+index = 0
 
 
 
@@ -86,9 +88,28 @@ def show_data():
     
 
     print(data)
+     
+
+def sort_data():
+
+    wb = xlrd.open_workbook('Expenses01.xlsx')
+    sheet = wb.sheet_by_index(0) 
+    sheet.cell_value(0, 0) 
+    data = np.arange(0)
+    data.resize(sheet.nrows,sheet.ncols)
+
+   
+    for i in range(sheet.nrows):
+        for j in range(sheet.ncols):
+            data[i][j] = sheet.cell_value(i,j)
+    
+
+    for i in range(sheet.nrows):
+        Datarecv(data)
+        
 
 
 
 if __name__ == '__main__':
 		#print("Server Start")
-        Main()
+		Main()
