@@ -168,55 +168,59 @@ def Datarecv(data): #Step1
     select_DB(datas)#step2
 
 def TSP(listSelect):#step3
-        for i in range(listSelect) :
-                newarr.append(listSelect[i])
-        print(newarr)
-        for i in range(len(newarr)) :
-                num1.append(newarr[i][0]) 
-                num2.append(newarr[i][1])
+    wb = xlrd.open_workbook('Expenses01.xlsx')
+    sheet = wb.sheet_by_name('TSP_Data')
+    sheet.cell_value(0, 0) 
+    
+    for i in range(listSelect) :
+        newarr.append(listSelect[i])
+    print(newarr)
+    for i in range(len(newarr)) :
+        num1.append(newarr[i][0]) 
+        num2.append(newarr[i][1])
 
-        print(num1) 
-        print(num2)
-        minn = dall[0][0]
-        position = 0
+    print(num1) 
+    print(num2)
+    minn = dall[0][0]
+    position = 0
         
-        for i in range(len(num1)):
-                for j in range(len(num1)):
-                        xi = np.power((num1[i]-num1[j]),2)
-                        yi = np.power((num2[i]-num2[j]),2)
-                        d = np.sqrt(xi+(yi))
-                        dall[i][j] = d
+    for i in range(len(num1)):
+        for j in range(len(num1)):
+            xi = np.power((num1[i]-num1[j]),2)
+            yi = np.power((num2[i]-num2[j]),2)
+            d = np.sqrt(xi+(yi))
+            dall[i][j] = d
 
-        print(dall) 
-        for i in range(len(num1)):
-                minn = dall[position][position]
-                point = position
-                for j in range(len(num1)):
-                        if minn == 0 :
-                                minn =  dall[point][j]
-                                position = j
+    print(dall) 
+    for i in range(len(num1)):
+        minn = dall[position][position]
+        point = position
+        for j in range(len(num1)):
+            if minn == 0 :
+                minn =  dall[point][j]
+                position = j
                 
-                        if minn >= dall[point][j] and dall[point][j] > 0  :
-                                if chackpath(j):
-                                        minn = dall[point][j]
-                                        position = j
-                posarry.append(position)
+            if minn >= dall[point][j] and dall[point][j] > 0  :
+                if chackpath(j):
+                    minn = dall[point][j]
+                    position = j
+        posarry.append(position)
         
-        print(posarry) 
-        return posarry
+    print(posarry) 
+    return posarry
 
 
 #####test on pi ######
 
 def chackpath(x):
-        path = 0
-        for i in range(len(posarry)):
-                if(x == posarry[i]):
-                       path = 0
-                       break
-                else:
-                        path = 1
-        if path == 0:
-                return False
-        else :
-                return True
+    path = 0
+    for i in range(len(posarry)):
+        if(x == posarry[i]):
+            path = 0
+            break
+        else:
+            path = 1
+    if path == 0:
+        return False
+    else :
+        return True
