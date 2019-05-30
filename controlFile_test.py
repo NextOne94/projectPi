@@ -160,12 +160,12 @@ def select_DB(datas):#step2
     #StepMove(Listtsp)#step4
 
 def Datarecv(data): #Step1
-    datas = data.split('-')
-    datas.pop(0)
-    datas.pop(len(datas)-1)
-    print(datas)
-    print(len(datas))
-    select_DB(datas)#step2
+    # datas = data.split('-')
+    # datas.pop(0)
+    # datas.pop(len(datas)-1)
+    print(data)
+    print(len(data))
+    select_DB(data)#step2
 
 def TSP(listSelect):#step3
     wb = xlrd.open_workbook('Expenses01.xlsx')

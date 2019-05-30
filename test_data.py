@@ -20,12 +20,16 @@ def Main():
     
     print("Select the opiton : 1: random Data ")
     print("                    2: show random data")
+    print("                    3: show sort data")
     select = input()
     if int(select) == 1 :
         random_data()
         Main()
     elif int(select) == 2:
         show_data()
+        Main()
+    elif int(select) == 3:
+        sort_data()
         Main()
     elif int(select) == 0 :
         print("End")
@@ -103,9 +107,7 @@ def sort_data():
         for j in range(sheet.ncols):
             data[i][j] = sheet.cell_value(i,j)
     
-
-    for i in range(sheet.nrows):
-        Datarecv(data)
+    Datarecv(data[0])
         
 
 
