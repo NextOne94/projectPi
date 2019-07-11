@@ -206,7 +206,7 @@ def TSP(listSelects):#step3
             d = np.sqrt(xi+(yi))
             dall[i][j] = d
     posarry.insert(len(num1)-1,0)
-    print(dall) 
+    print(dall)
     for i in range(len(num1)):
         #print("i =" ,i)
         minn = dall[position][position]
@@ -235,7 +235,7 @@ def TSP(listSelects):#step3
                 #     print("not OK") 
         #print("----End LOOP J----")
 
-        posarry.append(position)
+        posarry.insert(i,position)
     print(posarry)
         
     
