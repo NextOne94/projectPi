@@ -8,8 +8,8 @@ from controlFile_test import *
 
 
 # Create a workbook and add a worksheet.
-workbook = xlsxwriter.Workbook('Expenses01.xlsx')
-worksheet = workbook.add_worksheet("RandomData")
+
+
 index = 0
 
 
@@ -42,10 +42,11 @@ def Main():
             
 
 def random_data():
+    workbook = xlsxwriter.Workbook('Expenses01.xlsx')
+    worksheet = workbook.add_worksheet("RandomData")
+    worksheet = workbook.add_worksheet("TSP_Data")
     row = 0
-    
-    
-    for n in range(10) :
+    for n in range(5) :
         coun = 0
         col = 0
         datatoserver = []
@@ -67,13 +68,12 @@ def random_data():
                     
 
         print(datatoserver)
+        worksheet = workbook.get_worksheet_by_name('RandomData')
         for data in (datatoserver) :
             row = n
             worksheet.write(row, col, data)
             col += 1
     workbook.close()
-
-
 
 def show_data():
     wb = xlrd.open_workbook('Expenses01.xlsx')
@@ -106,7 +106,7 @@ def sort_data():
     for i in range(sheet.nrows):
         for j in range(sheet.ncols):
             data[i][j] = sheet.cell_value(i,j)
-    
+    print(data[0])
     Datarecv(data[0])
         
 

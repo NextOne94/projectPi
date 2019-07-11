@@ -23,18 +23,16 @@ SPR = 200   # Steps per Revolution (360 / 1.8)
 #arr = np.arange(0)
 #arr.resize(16,22)
 #arr1 = [(4,2),(4,14),(8,2),(12,10)]
-num1 = []
-num2 = []
-dall = np.arange(0)
-dall.resize(5,5)
+
+posarry = []
 dAll = np.arange(0)
 dAll.resize(5,5)
-newarr = [ (0,0) ]
+#newarr = [ (0,0) ]
 #x = len(arr1)
-posarry = [0]
 
-workbook = xlsxwriter.Workbook('Expenses01.xlsx')
-worksheet = workbook.add_worksheet("TSP_Data")
+
+
+
 
 
 # def StepMove(xxx):#step4
@@ -156,70 +154,110 @@ def select_DB(datas):#step2
         connection.close()
     print(xxx)
     Listtsp = TSP(xxx)#step3
-
+    
     #StepMove(Listtsp)#step4
 
 def Datarecv(data): #Step1
     # datas = data.split('-')
     # datas.pop(0)
     # datas.pop(len(datas)-1)
-    print(data)
-    print(len(data))
-    select_DB(data)#step2
+    datas = data.tolist()
+    datas.insert(0,999)
+    print(datas)
+    print(len(datas))
+    select_DB(datas)#step2
 
-def TSP(listSelect):#step3
-    wb = xlrd.open_workbook('Expenses01.xlsx')
-    sheet = wb.sheet_by_name('TSP_Data')
-    sheet.cell_value(0, 0) 
+def TSP(listSelects):#step3
+    #wb = xlrd.open_workbook('Expenses01.xlsx')
+    #sheet = wb.sheet_by_index(1) 
+    #sheet.cell_value(0, 0) 
+    dall = np.arange(0)
+    num1 = []
+    num2 = []
+    newarr = []
     
-    for i in range(listSelect) :
-        newarr.append(listSelect[i])
+    #print("start posarry =",posarry)
+    for listSelect in listSelects :
+        n1 = listSelect[1]
+        n2 = listSelect[2]
+        newarr.append([n1, n2])
+        num1.append(n1) 
+        num2.append(n2)
+        
     print(newarr)
-    for i in range(len(newarr)) :
-        num1.append(newarr[i][0]) 
-        num2.append(newarr[i][1])
 
-    print(num1) 
-    print(num2)
+    # for i in range(len(newarr)) :
+    #     num1.append(newarr[i][0]) 
+    #     num2.append(newarr[i][1])
+
+    # print(num1) 
+    # print(num2)
+    dall.resize(len(num1),len(num1))
     minn = dall[0][0]
     position = 0
-        
+    global  posarry 
+
+    if len(posarry) > len(num1)-1: 
+        posarry = []
     for i in range(len(num1)):
         for j in range(len(num1)):
             xi = np.power((num1[i]-num1[j]),2)
             yi = np.power((num2[i]-num2[j]),2)
             d = np.sqrt(xi+(yi))
             dall[i][j] = d
-
+    posarry.insert(len(num1)-1,0)
     print(dall) 
     for i in range(len(num1)):
+        #print("i =" ,i)
         minn = dall[position][position]
         point = position
+        #print("point =" ,point)
         for j in range(len(num1)):
+            #print("j =" ,j)
+            #print("value j =" ,dall[point][j])
             if minn == 0 :
                 minn =  dall[point][j]
+                #print("start min = ",minn) 
                 position = j
+            
                 
             if minn >= dall[point][j] and dall[point][j] > 0  :
+                #print(j)
+                #print("Old min = ",minn)
+                #print("chack_path = ",chackpath(j))
                 if chackpath(j):
+                   # print(j)
                     minn = dall[point][j]
+                    #print("new min = ",minn)
                     position = j
+                   # print("new position  = ",j)
+                # if chackpath(j) == False and j == len(num1)-1 :
+                #     print("not OK") 
+        #print("----End LOOP J----")
+
         posarry.append(position)
+    print(posarry)
         
-    print(posarry) 
+    
     return posarry
 
 
 #####test on pi ######
 
 def chackpath(x):
+    #print(posarry,x)
+    #print(len(posarry))
     path = 0
-    for i in range(len(posarry)):
-        if(x == posarry[i]):
-            path = 0
-            break
-        else:
+    if len(posarry) == 0 :
             path = 1
+    else:        
+        for i in range(len(posarry)):
+            if(x == posarry[i]):
+                path = 0
+                break
+            else:
+                path = 1
+            #print("path = ",path)
     if path == 0:
         return False
     else :
