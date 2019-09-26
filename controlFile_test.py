@@ -27,6 +27,7 @@ SPR = 200   # Steps per Revolution (360 / 1.8)
 posarry = []
 dAll = np.arange(0)
 dAll.resize(5,5)
+sumq = 0
 #newarr = [ (0,0) ]
 #x = len(arr1)
 
@@ -144,7 +145,7 @@ def select_DB(datas):#step2
         cursor.execute(sql_command)
         results = cursor.fetchall()
         for row in results:
-            print (row)
+            #print (row)
             name = row[1]
             locx = row[2]
             locy = row[3]
@@ -152,7 +153,7 @@ def select_DB(datas):#step2
             
     
         connection.close()
-    print(xxx)
+    #print(xxx)
     Listtsp = TSP(xxx)#step3
     
     #StepMove(Listtsp)#step4
@@ -163,8 +164,8 @@ def Datarecv(data): #Step1
     # datas.pop(len(datas)-1)
     datas = data.tolist()
     datas.insert(0,999)
-    print(datas)
-    print(len(datas))
+    #print(datas)
+    #print(len(datas))
     select_DB(datas)#step2
 
 def TSP(listSelects):#step3
@@ -184,7 +185,7 @@ def TSP(listSelects):#step3
         num1.append(n1) 
         num2.append(n2)
         
-    print(newarr)
+    #print(newarr)
 
     # for i in range(len(newarr)) :
     #     num1.append(newarr[i][0]) 
@@ -196,16 +197,18 @@ def TSP(listSelects):#step3
     minn = dall[0][0]
     position = 0
     global  posarry 
+    global sumq
 
-    if len(posarry) > len(num1)-1: 
+    if len(posarry) > len(num1)-1: #รีเซตค่า posarry เมือเข้ารอบใหม่
         posarry = []
-    for i in range(len(num1)):
+        sumq = 0
+    for i in range(len(num1)): # คำนวนระยะห่างระหว่างจุด 2 จุด
         for j in range(len(num1)):
             xi = np.power((num1[i]-num1[j]),2)
             yi = np.power((num2[i]-num2[j]),2)
             d = np.sqrt(xi+(yi))
             dall[i][j] = d
-    posarry.insert(len(num1)-1,0)
+    posarry.insert(0,0) #ล็อกตำแหน่งสุดท้าย
     print(dall)
     for i in range(len(num1)):
         #print("i =" ,i)
@@ -213,15 +216,16 @@ def TSP(listSelects):#step3
         point = position
         #print("point =" ,point)
         for j in range(len(num1)):
-            #print("j =" ,j)
+            #print("point =" ,point," j =" ,j," value j =" ,dall[point][j]," start min = ",minn )
             #print("value j =" ,dall[point][j])
             if minn == 0 :
-                minn =  dall[point][j]
+                #print(max(dall[point]))
+                minn = max(dall[point])
                 #print("start min = ",minn) 
                 position = j
             
                 
-            if minn >= dall[point][j] and dall[point][j] > 0  :
+            if minn >= dall[point][j] and dall[point][j] > 0  : #เลือกค่าที่น้อยที่สุด
                 #print(j)
                 #print("Old min = ",minn)
                 #print("chack_path = ",chackpath(j))
@@ -234,9 +238,12 @@ def TSP(listSelects):#step3
                 # if chackpath(j) == False and j == len(num1)-1 :
                 #     print("not OK") 
         #print("----End LOOP J----")
-
+        sumq = sumq + int(minn)
         posarry.insert(i,position)
-    print(posarry)
+    posarry.pop()
+    print(posarry,sumq)
+    pathoriginal(dall)
+    print("----End----")
         
     
     return posarry
@@ -245,14 +252,15 @@ def TSP(listSelects):#step3
 #####test on pi ######
 
 def chackpath(x):
-    #print(posarry,x)
+    
     #print(len(posarry))
     path = 0
+    #print(posarry,x)
     if len(posarry) == 0 :
             path = 1
     else:        
         for i in range(len(posarry)):
-            if(x == posarry[i]):
+            if(int(x) == int(posarry[i])):
                 path = 0
                 break
             else:
@@ -262,3 +270,8 @@ def chackpath(x):
         return False
     else :
         return True
+
+def pathoriginal(dataList):
+    #print(dataList)
+    sumO = dataList[0][1] + dataList[1][2] + dataList[2][3] + dataList[3][4] + dataList[4][5] + dataList[5][0]
+    print("path original = ", sumO) 

@@ -107,7 +107,8 @@ def sort_data():
         for j in range(sheet.ncols):
             data[i][j] = sheet.cell_value(i,j)
     print(data[0])
-    Datarecv(data[0])
+    for i in range(len(data)):
+        Datarecv(data[i])
         
 
 
