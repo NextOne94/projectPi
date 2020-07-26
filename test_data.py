@@ -1,10 +1,14 @@
 import random
-import xlsxwriter
-import xlrd 
+#import xlsxwriter
+#import xlrd 
 import numpy as np
+import  sqlite3
 from controlFile_test import *
-
-
+from smbus2 import SMBus
+ 
+addr = 0x8 # bus address
+bus = SMBus(1) # indicates /dev/ic2-1
+  
 
 
 # Create a workbook and add a worksheet.
@@ -21,6 +25,8 @@ def Main():
     print("Select the opiton : 1: random Data ")
     print("                    2: show random data")
     print("                    3: show sort data")
+    print("                    4: Send data to stm32 with I2C protocol")
+    print("                    0: To Exit")
     select = input()
     if int(select) == 1 :
         random_data()
@@ -31,49 +37,52 @@ def Main():
     elif int(select) == 3:
         sort_data()
         Main()
+    elif int(select) == 4:
+        send_data()
+        Main()
     elif int(select) == 0 :
         print("End")
     else:
         Main()
 
-
-
-    
-            
-
 def random_data():
-    workbook = xlsxwriter.Workbook('Expenses01.xlsx')
-    worksheet = workbook.add_worksheet("RandomData")
-    worksheet = workbook.add_worksheet("TSP_Data")
-    row = 0
+    connection = sqlite3.connect('project_test.db')
+    cursor = connection.cursor()
+    sql_command ="DELETE from dataformUser"
+    cursor.execute(sql_command)
+    connection.commit()
     for n in range(5) :
         coun = 0
-        col = 0
-        datatoserver = []
+        
+        datafromUser = []
         while coun != 5:
                 dup = True
                 x = random.randint(0,23)
-                if len(datatoserver) == 0:
-                    datatoserver.append(x)
+                if len(datafromUser) == 0:
+                    datafromUser.append(x)
                     coun +=1
                 else :
-                    for i in range(len(datatoserver)):
-                        if  x == datatoserver[i]:
+                    for i in range(len(datafromUser)):
+                        if  x == datafromUser[i]:
                             dup = False
                             break
                                 
                     if dup == True :
-                        datatoserver.append(x)
+                        datafromUser.append(x)
                         coun +=1
                     
+        print(datafromUser)
+        
+        for i in range(len(datafromUser)) :
+            print(datafromUser[i])
+            cursor = connection.cursor()
+            sql_command = "INSERT INTO dataformUser (round, drug_id ) VALUES ( %d , %d)" %(n, int(datafromUser[i]))
+            cursor.execute(sql_command)
+            connection.commit()
+            
+    connection.close()       
+        
 
-        print(datatoserver)
-        worksheet = workbook.get_worksheet_by_name('RandomData')
-        for data in (datatoserver) :
-            row = n
-            worksheet.write(row, col, data)
-            col += 1
-    workbook.close()
 
 def show_data():
     wb = xlrd.open_workbook('Expenses01.xlsx')
@@ -110,6 +119,9 @@ def sort_data():
     for i in range(len(data)):
         Datarecv(data[i])
         
+def send_data():
+    
+       print("444444")
 
 
 
