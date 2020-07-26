@@ -24,7 +24,7 @@ def Main():
     
     print("Select the opiton : 1: random Data ")
     print("                    2: show random data")
-    print("                    3: show sort data")
+    print("                    3: sort and show data")
     print("                    4: Send data to stm32 with I2C protocol")
     print("                    0: To Exit")
     select = input()
@@ -41,6 +41,8 @@ def Main():
         send_data()
         Main()
     elif int(select) == 0 :
+        connection = sqlite3.connect('project_test.db')
+        connection.close() 
         print("End")
     else:
         Main()
@@ -53,7 +55,6 @@ def random_data():
     connection.commit()
     for n in range(5) :
         coun = 0
-        
         datafromUser = []
         while coun != 5:
                 dup = True
@@ -71,10 +72,10 @@ def random_data():
                         datafromUser.append(x)
                         coun +=1
                     
-        print(datafromUser)
+        #print(datafromUser)
         
         for i in range(len(datafromUser)) :
-            print(datafromUser[i])
+            #print(datafromUser[i])
             cursor = connection.cursor()
             sql_command = "INSERT INTO dataformUser (round, drug_id ) VALUES ( %d , %d)" %(n, int(datafromUser[i]))
             cursor.execute(sql_command)
@@ -85,39 +86,45 @@ def random_data():
 
 
 def show_data():
-    wb = xlrd.open_workbook('Expenses01.xlsx')
-    sheet = wb.sheet_by_index(0) 
-    sheet.cell_value(0, 0) 
-
-    # print(sheet.nrows)
-    # print(sheet.ncols)
-    data = np.arange(0)
-    data.resize(sheet.nrows,sheet.ncols)
-
-    #print(data)
-    for i in range(sheet.nrows):
-        for j in range(sheet.ncols):
-            data[i][j] = sheet.cell_value(i,j)
+    connection = sqlite3.connect('project_test.db')
+    cursor = connection.cursor()
+    results = [0]
+    r = 0
+    xxx =[]
+    while(len(results) != 0):
+        sql_command = "SELECT * FROM dataformUser WHERE round = %d;" % int(r)  
+        cursor.execute(sql_command)
+        results = cursor.fetchall()
+        for row in results:
+            xxx.append(row[2])   
+        r=r+1
+        if(len(results) != 0):
+            print(xxx)
+        xxx.clear()
     
-
-    print(data)
+    connection.close() 
+    
      
 
 def sort_data():
 
-    wb = xlrd.open_workbook('Expenses01.xlsx')
-    sheet = wb.sheet_by_index(0) 
-    sheet.cell_value(0, 0) 
-    data = np.arange(0)
-    data.resize(sheet.nrows,sheet.ncols)
+    connection = sqlite3.connect('project_test.db')
+    cursor = connection.cursor()
+    results = [0]
+    r = 0
+    sort = []
+    while(len(results) != 0):
+        sql_command = "SELECT * FROM dataformUser WHERE round = %d;" % int(r)  
+        cursor.execute(sql_command)
+        results = cursor.fetchall()
+        for row in results:
+            sort.append(row[2])   
+        r=r+1
+        if(len(results) != 0):
+            print(sort)
+            Datarecv(sort)
+        sort.clear()
 
-   
-    for i in range(sheet.nrows):
-        for j in range(sheet.ncols):
-            data[i][j] = sheet.cell_value(i,j)
-    print(data[0])
-    for i in range(len(data)):
-        Datarecv(data[i])
         
 def send_data():
     

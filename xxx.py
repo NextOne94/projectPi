@@ -29,7 +29,23 @@ def Main():
 
     print(datatoserver)
             
+def show_data():
+    wb = xlrd.open_workbook('Expenses01.xlsx')
+    sheet = wb.sheet_by_index(0) 
+    sheet.cell_value(0, 0) 
 
+    # print(sheet.nrows)
+    # print(sheet.ncols)
+    data = np.arange(0)
+    data.resize(sheet.nrows,sheet.ncols)
+
+    #print(data)
+    for i in range(sheet.nrows):
+        for j in range(sheet.ncols):
+            data[i][j] = sheet.cell_value(i,j)
+    
+
+    print(data)
     
 
             

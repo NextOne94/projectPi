@@ -1,15 +1,10 @@
 from time import sleep
 import  sqlite3
 import numpy as np
-import xlsxwriter
-import xlrd 
 
-
-posarry = []
-dAll = np.arange(0)
-dAll.resize(5,5)
+rud = 0
 sumq = 0
-
+posarry = []
 def select_DB(datas):#step2
     xxx = []
     for i in range(len(datas)):
@@ -29,22 +24,18 @@ def select_DB(datas):#step2
     
         connection.close()
     #print(xxx)
-    Listtsp = TSP(xxx)#step3
     
     
+    
+    TSP(xxx)#step3
+
 
 def Datarecv(data): #Step1
-    # datas = data.split('-')
-    # datas.pop(0)
-    # datas.pop(len(datas)-1)
-    datas = data.tolist()
-    datas.insert(0,999)
-    #print(datas)
-    #print(len(datas))
-    select_DB(datas)#step2
+    data.insert(0,999)
+    select_DB(data)#step2
+
 
 def TSP(listSelects):#step3
-
     dall = np.arange(0)
     num1 = []
     num2 = []
@@ -61,10 +52,13 @@ def TSP(listSelects):#step3
     dall.resize(len(num1),len(num1))
     minn = dall[0][0]
     position = 0
-    global  posarry 
+    
+    global posarry 
     global sumq
+    global rud
+    
 
-    if len(posarry) > len(num1)-1: #รีเซตค่า posarry เมือเข้ารอบใหม่
+    if len(posarry) > len(num1)-1: #รีเซตค่า posarry เมื่อเข้ารอบใหม่
         posarry = []
         sumq = 0
     for i in range(len(num1)): # คำนวนระยะห่างระหว่างจุด 2 จุด
@@ -108,10 +102,30 @@ def TSP(listSelects):#step3
     posarry.pop()
     print(posarry,sumq)
     pathoriginal(dall)
-    print("----End----")
-        
+
+    connection = sqlite3.connect('project_test.db')
     
-    return posarry
+    cursor = connection.cursor()
+     
+    for i in range(len(posarry)) :
+        namE = listSelects[posarry[i]][0]
+        locx = listSelects[posarry[i]][1]
+        locy = listSelects[posarry[i]][2]
+        namE =str(namE)
+        locx = str(locx)
+        locy = str(locy)
+        rudS = str(rud)
+        #print( namE+" "+ rudS +" "+locx+"  "+locy)
+        sql_command = "INSERT INTO data_sort VALUES ( NULL, ?, ?, ?,?)"
+        cursor.execute(sql_command,( namE, rudS, locx, locy))
+        connection.commit()
+        
+    rud=rud+1
+    connection.close()
+    print("----End----")S
+        
+
+    #return posarry
 
 
 #####test on pi ######
