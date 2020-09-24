@@ -14,7 +14,7 @@ dnames = StringVar(value=drungname)
 datatoserver = []
 text = StringVar(root, value='1')
 
-host = '192.168.137.165'
+host = '192.168.137.127'
 port = 5000
 s = socket.socket()
 s.connect((host, port))
@@ -23,9 +23,12 @@ s.connect((host, port))
 def sendData(*args):
     print("AAA")
     # datatoserver.clear()
-    datatoservernew ="-"
+    datatoservernew =""
     for i in range(0, len(datatoserver), 1):
-        datatoserverold = str(datatoserver[i])+'-'
+        if(datatoservernew == "" ):
+            datatoserverold = str(datatoserver[i])
+        else :
+            datatoserverold = '-' + str(datatoserver[i])
         datatoservernew = datatoservernew + datatoserverold
 
     s.send(datatoservernew.encode('utf-8'))
