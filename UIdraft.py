@@ -14,7 +14,7 @@ dnames = StringVar(value=drungname)
 datatoserver = []
 text = StringVar(root, value='1')
 
-host = '192.168.137.127'
+host = '192.168.1.132'
 port = 5000
 s = socket.socket()
 s.connect((host, port))

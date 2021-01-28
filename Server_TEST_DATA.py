@@ -5,7 +5,8 @@ import  sqlite3
 import serial
 import syslog
 import time
-from controlFile_test import *
+#from controlFile_test import *
+from testmake import *
 import RPi.GPIO as GPIO  
 GPIO.setmode(GPIO.BCM)
 
